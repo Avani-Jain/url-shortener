@@ -32,7 +32,8 @@ public class ShortenedUrl {
 
     @NotBlank(message = "Original URL cannot be blank")
     @URL(message = "Invalid URL format")
-    @Column(nullable = false, columnDefinition = "LONGTEXT", length=2048)
+    // @Column(nullable = false, columnDefinition = "LONGTEXT", length=2048)
+    @Column(nullable = false, length = 2048)
     private String originalUrl;
 
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -1,5 +1,6 @@
 
 spring:
+  
   application:
     name: distributed-url-shortener
 
@@ -14,7 +15,9 @@ spring:
       connection-timeout: 20000
       idle-timeout: 300000
       max-lifetime: 1200000
-
+  jackson:
+    serialization:
+      write-dates-as-timestamps : false
   jpa:
     hibernate:
       ddl-auto: update
@@ -53,7 +56,6 @@ server:
   compression:
     enabled: true
     min-response-size: 1024
-
 logging:
   level:
     root: INFO
