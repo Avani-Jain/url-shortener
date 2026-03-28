@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-UrlShortenerApplication<distributed-url-shortener>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.urlshortener.UrlShortenerApplication",
+            "projectName": "distributed-url-shortener",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
