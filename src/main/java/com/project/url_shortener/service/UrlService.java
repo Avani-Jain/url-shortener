@@ -26,7 +26,7 @@ public class UrlService {
         this.redisTemplate = redisTemplate;
     }
 
-    private String createShortUrl(String longUrl) {
+    public String createShortUrl(String longUrl) {
         UrlMapping mapping = new UrlMapping(longUrl);
         UrlMapping saved =  repository.save(mapping);
 

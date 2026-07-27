@@ -9,5 +9,4 @@ import lombok.Setter;
 @Getter@Setter@AllArgsConstructor
 public class ShortenResponse {
     private String shortUrl;
-
 }
