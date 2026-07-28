@@ -3,7 +3,6 @@ package com.project.url_shortener.service;
 import com.project.url_shortener.entity.UrlMapping;
 import com.project.url_shortener.repository.UrlMappingRepository;
 import com.project.url_shortener.util.Base62Encoder;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
