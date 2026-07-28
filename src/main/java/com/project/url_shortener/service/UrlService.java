@@ -1,6 +1,7 @@
 package com.project.url_shortener.service;
 
 import com.project.url_shortener.entity.UrlMapping;
+import com.project.url_shortener.exception.UrlNotFoundException;
 import com.project.url_shortener.repository.UrlMappingRepository;
 import com.project.url_shortener.util.Base62Encoder;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,21 @@ public class UrlService {
         redisTemplate.opsForValue().set(cacheKey, longUrl, CACHE_TTL);
 
         return baseUrl + "/" +shortCode;
+    }
+    public String getLongUrl(String shortCode){
+        String cacheKey = CACHE_KEY_PREFIX + shortCode;
+        String cachedUrl = redisTemplate.opsForValue().get(cacheKey);
+        //CACHE-HIT
+        if(cachedUrl != null){
+            redisTemplate.expire(cacheKey, CACHE_TTL);
+            return cachedUrl;
+        }
+        //CACHE-MISS
+        Long id = Base62Encoder.decode(shortCode); //decoding shortcode which is nothing but the ID of database.
+        UrlMapping mapping = repository.findById(id)
+                .orElseThrow(() -> new UrlNotFoundException("No URL found for code: "+shortCode));
+        redisTemplate.opsForValue().set(cacheKey, id.toString(), CACHE_TTL);
+        return mapping.getLongUrl();
     }
 
 }

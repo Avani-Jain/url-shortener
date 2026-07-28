@@ -30,4 +30,4 @@ management:
         include: health, info
 
 app:
-  base-url: http://localhost:8000
+  base-url: http://localhost:8080

@@ -37,4 +37,6 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),  "Internal Server Error", "Something went wrong. Please try again later.", request.getRequestURI());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    //since RedisConnectionFailureException is not a terminal error but rather a recoverable business logic (fallback to MySQL), it is not included in this file and can be handled locally using local try/catch in the service class.
 }
