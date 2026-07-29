@@ -15,13 +15,30 @@ spring:
     properties:
       hibernate:
         format_sql: true
+#Using default Lettuce pool (Redis Client library) - built on Netty and is thread-safe by design with a single shared connection
   data:
     redis:
       host: localhost
       port: 6379
 
+#customised to handle multiple requests (10k req/sec) -> however we need a specific Config class because in order to have 5 or more open connections, we need to ensure that shareNativeConnection of Lettuce is false[Spring Data Redis's LettuceConnectionFactory has a setting called shareNativeConnection, and it defaults to true. What this means: for regular commands (your GET/SET calls via StringRedisTemplate), Spring reuses one single shared native connection across your whole app — regardless of whatever pool configuration you've set in YAML. The pool config you added does get built, but it's only actually consulted in specific situations (like when shareNativeConnection is turned off, or for certain blocking/pub-sub connection acquisitions) — not for everyday opsForValue().get()/set() calls.], which cannot be done using properties.
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+#      lettuce:
+#        pool:
+#
+#          max-active: 20 #how many connections can be in use at once
+#          max-idle: 10 #how many can sit unused, ready to go, without being shutdown to save resources
+#          min-idle: 5 #always keep these many open even during quiet periods
+#          max-wait: 2000ms #if all connections are busy, how long a request will wait before giving up entirely
 server:
   port: 8080
+logging:
+  level:
+    io.lettuce.core: DEBUG
+    org.springframework.data.redis: DEBUG
 
 management:
   endpoints:
