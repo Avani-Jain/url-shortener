@@ -3,7 +3,7 @@ spring:
     name: url-shortener
 
   datasource:
-    url: jdbc:mysql://localhost:3306/urlshortener
+    url: jdbc:mysql://localhost:3307/urlshortener
     username: root
     password: admin@123
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,6 +20,10 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+ratelimit:
+  capacity: 10
+  refill-rate: 1
 
 #customised to handle multiple requests (10k req/sec) -> however we need a specific Config class because in order to have 5 or more open connections, we need to ensure that shareNativeConnection of Lettuce is false[Spring Data Redis's LettuceConnectionFactory has a setting called shareNativeConnection, and it defaults to true. What this means: for regular commands (your GET/SET calls via StringRedisTemplate), Spring reuses one single shared native connection across your whole app — regardless of whatever pool configuration you've set in YAML. The pool config you added does get built, but it's only actually consulted in specific situations (like when shareNativeConnection is turned off, or for certain blocking/pub-sub connection acquisitions) — not for everyday opsForValue().get()/set() calls.], which cannot be done using properties.
 #  data:
